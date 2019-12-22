@@ -1,7 +1,6 @@
 import unittest
 from exceptions import gpm_exceptions
 from gmusicapi import Mobileclient
-from os import path
 from unittest.mock import MagicMock
 from unittest.mock import patch
 from wrappers import gpm_wrapper
@@ -18,7 +17,7 @@ class GpmWrapperTestCase(unittest.TestCase):
         mock_mobile_client = Mobileclient()
         mock_mobile_client.oauth_login = MagicMock(return_value=False)
         with patch.object(self.wrapper, '_Wrapper__get_oauth_token', return_value=True) as patched_oauth_method,\
-            patch.object(self.wrapper, '_Wrapper_mobile_client_oauth_login', return_value=True) as patched_login_method:
+            patch.object(self.wrapper, '_Wrapper__login', return_value=True) as patched_login_method:
 
             auth_result = self.wrapper.handle_auth_flow(self.test_fp, self.device_id)
             patched_oauth_method.assert_called_once_with(self.test_fp)
@@ -38,7 +37,8 @@ class GpmWrapperTestCase(unittest.TestCase):
 
     def test_auth_flow_when_login_fails(self):
         with patch.object(self.wrapper, '_Wrapper__get_oauth_token', return_value=True) as patched_oauth_method,\
-            patch.object(self.wrapper, '_Wrapper__login', return_value=False) as patched_login_method:
+            patch.object(self.wrapper, '_Wrapper__login', ) as patched_login_method:
+            patched_login_method.side_effect = gpm_exceptions.UnableToLoginToService("Login Failed")
 
             with self.assertRaises(gpm_exceptions.UnableToLoginToService) as context:
                 self.wrapper.handle_auth_flow(self.test_fp, self.device_id)
