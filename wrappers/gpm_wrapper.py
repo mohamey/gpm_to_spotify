@@ -11,8 +11,7 @@ class Wrapper:
         if not self.__get_oauth_token(oauth_file_path):
             raise UnableToGetOauthCredentials("Unable to get oauth credentials for GPM")
 
-        if not self.__login(oauth_file_path, device_id):
-            raise UnableToLoginToService("Unable to log in to the GPM Service")
+        self.__login(oauth_file_path, device_id)
 
         # Got both the oauth token, and logged in. Return true to indicate success
         return True
@@ -36,4 +35,7 @@ class Wrapper:
 
     def __login(self, oauth_file_path, device_id=Mobileclient.FROM_MAC_ADDRESS):
         # Assuming token is already available on file system, log in
-        return self.mobile_client.oauth_login(device_id, oauth_file_path)
+        if self.mobile_client.oauth_login(device_id, oauth_file_path):
+            return True
+        else:
+            raise UnableToLoginToService(f"Login with device id {device_id}, oauth file path {oauth_file_path} failed")
