@@ -5,3 +5,5 @@ runtime/*
 .cache*
 *__pycache__*
 settings.json
+secrets.json
+oauth.cred
