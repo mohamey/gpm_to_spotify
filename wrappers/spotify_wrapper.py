@@ -1,4 +1,5 @@
 from exceptions.spotify_exceptions import InvalidAuthTokenReceived
+from json import load
 from spotipy import Spotify
 import spotipy.util as util
 
@@ -6,10 +7,8 @@ class SpotifyWrapper:
     def __init__(self):
         self.__spotify = Spotify()
         self.__scope = 'user-library-read,user-library-modify'
-        self.__client_id = 'client id here'
-        self.__client_secret = 'client secret here'
         self.__redirect_url = 'http://localhost:8080/redirect'
-        self.__user = 'user here'
+        self.__load_secrets()
 
     def handle_auth(self):
         token = util.prompt_for_user_token(self.__user, self.__scope, self.__client_id,\
@@ -25,3 +24,19 @@ class SpotifyWrapper:
         for item in results['items']:
             track = item['track']
             print(f"{track['name']} - {track['artists'][0]['name']}")
+
+    def find_track(self, track):
+        results = self.__spotify.search(q="{track} album:{album} year:{year}".format(track=track.get_title(),
+                                                     album=track.get_album(), year=track.get_year()), type='track')
+
+        print(f"Found {len(results['tracks']['items'])} results for {track.get_title()} - {track.get_artist()}")
+        for result_track in results['tracks']['items']:
+            print(f"{result_track['name']} - {result_track['artists'][0]['name']}")
+
+    def __load_secrets(self):
+        with open('/home/yasir/Documents/Projects/gpm_to_spotify/secrets.json') as secrets_file:
+            secrets = load(secrets_file)
+            self.__client_id = secrets['client']['id']
+            self.__client_secret = secrets['client']['secret']
+            self.__user = secrets['user']
+
