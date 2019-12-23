@@ -49,6 +49,14 @@ class GpmWrapperTestCase(unittest.TestCase):
             patched_oauth_method.assert_called_once_with(self.test_fp)
             patched_login_method.assert_called_once_with(self.test_fp, self.device_id)
 
+    """Map library to Tracks Test"""
+    def test_library_mapped_to_songs(self):
+        self.wrapper.handle_auth_flow("/home/yasir/Documents/Projects/gpm_to_spotify/.runtime/oauth.cred")
+        self.wrapper.get_song_library()
+        self.wrapper.map_song_library_to_tracks()
+
+        self.assertTrue(len(self.wrapper.tracks) > 0)
+
 
 if __name__ == "__main__":
     unittest.main()

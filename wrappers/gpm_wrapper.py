@@ -1,11 +1,14 @@
 from gmusicapi import Mobileclient
 from exceptions.gpm_exceptions import *
+from meta.structures.track import Track
 from os import path
 
 
 class Wrapper:
     def __init__(self):
         self.mobile_client = Mobileclient()
+        self.library = []
+        self.tracks = []
 
     def handle_auth_flow(self, oauth_file_path, device_id=Mobileclient.FROM_MAC_ADDRESS):
         if not self.__get_oauth_token(oauth_file_path):
@@ -18,9 +21,15 @@ class Wrapper:
 
     def get_song_library(self):
         if self.mobile_client.is_authenticated():
-            return self.mobile_client.get_all_songs()
+            self.library = self.mobile_client.get_all_songs()
         else:
             raise NotAuthenticatedException("Unable to perform authenticated requests at this time.")
+
+    def map_song_library_to_tracks(self):
+        for track in self.library:
+            # TODO: Handle when an attribute is missing from GPM Library
+            self.tracks.append(Track(title=track['title'], artist=track['artist'], album=track['album'],
+                                       year=track['year']))
 
     def __get_oauth_token(self, oauth_file_path):
         # If token already exists on system, read it and check its not empty
