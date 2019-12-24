@@ -1,6 +1,7 @@
 from gmusicapi import Mobileclient
 from exceptions.gpm_exceptions import *
 from meta.structures.track import Track
+from pymaybe import maybe
 from os import path
 
 
@@ -27,9 +28,15 @@ class Wrapper:
 
     def map_song_library_to_tracks(self):
         for track in self.library:
-            # TODO: Handle when an attribute is missing from GPM Library
-            self.tracks.append(Track(title=track['title'], artist=track['artist'], album=track['album'],
-                                       year=track['year']))
+            try:
+                self.tracks.append(Track(title=track['title'], artist=track['artist'],
+                                         album=maybe(track)['album'],  # By default, if key doesn't exist None is returned
+                                         year=maybe(track)['year']))
+            except KeyError as e:
+                print(f"Failed to retrieve mandatory key {e} for track {maybe(track)['title']} - {maybe(track)['artist']}. Skipping.")
+
+    def get_tracks(self):
+        return self.tracks
 
     def __get_oauth_token(self, oauth_file_path):
         # If token already exists on system, read it and check its not empty
