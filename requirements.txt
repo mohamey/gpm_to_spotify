@@ -1,2 +1,6 @@
+spotipy
 gmusicapi
 bumpversion
+pymaybe
+fuzzywuzzy
+python-Levenshtein
