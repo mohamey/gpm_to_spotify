@@ -1,22 +1,13 @@
-class Track:
-    def __init__(self, title, artist, album, year, genre=None):
-        self.__title = title
-        self.__artist = artist
-        self.__album = album
-        self.__year = year
-        self.__genre = genre
+""" This class is just a dict, but makes the code much easier to read in my opinion, since we're not just passing new
+dictionaries around. This Dict has the following string fields:
+* String title - Mandatory
+* String artist - Mandatory
+* String album - Optional
+* String year - Optional
+* String genre - Optional
+* String spotify_uri - Mandatory for Songs mapped to Spotify after search
+"""
 
-    def get_title(self):
-        return self.__title
-
-    def get_artist(self):
-        return self.__artist
-
-    def get_album(self):
-        return self.__album
-
-    def get_year(self):
-        return self.__year
-
-    def get_genre(self):
-        return self.__genre
+class Track(dict):
+    def __init__(self, *args, **kwargs):
+        super(Track, self).__init__(*args, **kwargs)
