@@ -1,8 +1,8 @@
-from gmusicapi import Mobileclient
 from exceptions.gpm_exceptions import *
+from gmusicapi import Mobileclient
 from meta.structures.track import Track
-from pymaybe import maybe
 from os import path
+from pymaybe import maybe
 
 
 class Wrapper:
