@@ -1,26 +1,47 @@
-from gmusicapi import Mobileclient
 from exceptions.gpm_exceptions import *
+from gmusicapi import Mobileclient
+from meta.structures.track import Track
 from os import path
+from pymaybe import maybe
 
 
 class Wrapper:
-    def __init__(self):
-        self.mobile_client = Mobileclient()
+    def __init__(self, config):
+        self.__library = []
+        self.__oauth_path = config['oauth_path'] # TODO: This should not go to prod, cred shouldn't be stored on disk
 
-    def handle_auth_flow(self, oauth_file_path, device_id=Mobileclient.FROM_MAC_ADDRESS):
-        if not self.__get_oauth_token(oauth_file_path):
+        self.mobile_client = Mobileclient()
+        self.tracks = []
+
+    def handle_auth_flow(self, device_id=Mobileclient.FROM_MAC_ADDRESS):
+        if not self.__get_oauth_token(self.__oauth_path):
             raise UnableToGetOauthCredentials("Unable to get oauth credentials for GPM")
 
-        self.__login(oauth_file_path, device_id)
+        self.__login(self.__oauth_path, device_id)
 
         # Got both the oauth token, and logged in. Return true to indicate success
         return True
 
     def get_song_library(self):
         if self.mobile_client.is_authenticated():
-            return self.mobile_client.get_all_songs()
+            self.__library = self.mobile_client.get_all_songs()
         else:
             raise NotAuthenticatedException("Unable to perform authenticated requests at this time.")
+
+    def map_song_library_to_tracks(self):
+        for track in self.__library:
+            try:
+                self.tracks.append(Track(title=track['title'], artist=track['artist'],
+                                         album=maybe(track)['album'],  # By default, if key doesn't exist None is returned
+                                         year=maybe(track)['year']))
+            except KeyError as e:
+                print(f"Failed to retrieve mandatory key {e} for track {maybe(track)['title']} - {maybe(track)['artist']}. Skipping.")
+
+    def get_tracks(self):
+        return self.tracks
+
+    def set_library(self, library):
+        self.__library = library
 
     def __get_oauth_token(self, oauth_file_path):
         # If token already exists on system, read it and check its not empty

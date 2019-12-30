@@ -2,3 +2,8 @@
 venv/
 runtime/*
 !runtime/.gitkeep
+.cache*
+*__pycache__*
+settings.json
+.config.json
+.oauth.cred
