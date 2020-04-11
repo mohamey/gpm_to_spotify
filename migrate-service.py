@@ -10,7 +10,7 @@ sys.path.append(path.abspath('../gmusicapi/gmusicapi'))
 
 if __name__ == '__main__':
     kafka_consumer = KafkaConsumer(
-        'gpm_auth',
+        'gpm-auth',
         bootstrap_servers=['localhost:9092'],
         auto_offset_reset='earliest',
         enable_auto_commit=True,
@@ -18,13 +18,19 @@ if __name__ == '__main__':
         value_deserializer=lambda x: x.decode()
     )
 
+    print("Kafka Consumer Created")
+
     kafka_producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                                    value_serializer=lambda v: dumps(v).encode('utf-8'))
+
+    print("Kafka Producer Created")
 
     with open('.config.json') as config_file:
         config = load(config_file)
 
+    print("Waiting for message")
     for message in kafka_consumer:
+        print("Message received")
         wrapper = Wrapper(config['gpm'])
         code = str(message.value)
         try:
@@ -40,7 +46,7 @@ if __name__ == '__main__':
         except Exception as e:
             print(f"There was an issue getting the library - {e}")
         finally:
-            kafka_producer.send(topic="gpm_libraries", value=str(wrapper.get_tracks()), key=code.encode('utf-8'))
+            kafka_producer.send(topic="gpm-libraries", value=str(wrapper.get_tracks()), key=code.encode('utf-8'))
             print("Finished :)")
 
 
