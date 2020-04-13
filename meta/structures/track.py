@@ -1,3 +1,5 @@
+from json import JSONEncoder
+
 """ This class is just a dict, but makes the code much easier to read in my opinion, since we're not just passing new
 dictionaries around. This Dict has the following string fields:
 * String title - Mandatory
@@ -11,3 +13,17 @@ dictionaries around. This Dict has the following string fields:
 class Track(dict):
     def __init__(self, *args, **kwargs):
         super(Track, self).__init__(*args, **kwargs)
+
+""" 
+This is just another dict, but will contain two track objects under two keys: 
+* String gpm
+* String spotify
+"""
+class MergedTrack(dict):
+    def __init__(self, *args, **kwargs):
+        super(MergedTrack, self).__init__(*args, **kwargs)
+
+# JSON Encoder for tracks objects
+class TrackEncoder(JSONEncoder):
+    def default(self, o):
+        return o.__dict__

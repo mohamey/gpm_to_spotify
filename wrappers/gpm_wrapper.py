@@ -37,10 +37,16 @@ class Wrapper:
         for track in self.__library:
             try:
                 self.tracks.append(Track(title=track['title'], artist=track['artist'],
-                                         album=maybe(track)['album'],  # By default, if key doesn't exist None is returned
-                                         year=maybe(track)['year']))
+                                         album=self.__get_optional_key(track, 'album'),  # By default, if key doesn't exist None is returned
+                                         year=self.__get_optional_key(track, 'year')))
             except KeyError as e:
                 print(f"Failed to retrieve mandatory key {e} for track {maybe(track)['title']} - {maybe(track)['artist']}. Skipping.")
+
+    def __get_optional_key(self, song, key):
+        try:
+            return song[key]
+        except KeyError:
+            return None
 
     def get_tracks(self):
         return self.tracks

@@ -1,11 +1,13 @@
 from exceptions.spotify_exceptions import InvalidAuthTokenReceived, InvalidTrackUsed
 from fuzzywuzzy import fuzz
-from json import load
-from meta.structures.track import Track
+from json import dump, dumps, load
+from meta.structures.track import Track, MergedTrack, TrackEncoder
 from spotipy import Spotify
+import logging
 import re
 import spotipy.util as util
 
+logger = logging.getLogger()
 
 class SpotifyWrapper:
     def __init__(self, config):
@@ -17,12 +19,13 @@ class SpotifyWrapper:
         self.__user = config['user']
         self.mapped_tracks = []
         self.unmapped_tracks = []
+        self.merged_tracks = []
 
     # Handle authenticating this app with Spotify for a given user
     def handle_auth(self, token=None):
         if not token:
-            token = util.prompt_for_user_token(self.__user, self.__scope, self.__client_id,\
-                self.__client_secret, self.__redirect_url)
+            token = util.prompt_for_user_token(self.__user, self.__scope, self.__client_id,
+                                               self.__client_secret, self.__redirect_url)
 
         if not token or len(token) == 0:
             raise InvalidAuthTokenReceived("Token is empty.")
@@ -34,23 +37,42 @@ class SpotifyWrapper:
         return self.__spotify.current_user_saved_tracks()
 
     # Upload track to library in Spotify
-    def add_saved_tracks(self, tracks=None):
-        if not tracks:
-            tracks = self.mapped_tracks
+    def add_track_uris_to_library(self, track_uris=None):
+        if not track_uris:
+            track_uris = [track['uri'] for track in self.mapped_tracks]
 
-        # We have a uri, just use spotipy to add to saved tracks
+        # Generate a list of track uris, use spotipy to update library
+        self.__update_library(track_uris)
+
+    # Given a list of Spotify URIs, add the list to the users saved tracks
+    def __update_library(self, track_uris=None):
+        if not track_uris:
+            logger.info("No Track URIs provided")
+            return
+
         index = 0
-        while index < len(tracks):
-            chunk_size = min(index + 50, len(tracks))
-            chunk = tracks[index:chunk_size]
-            index = chunk_size
+        while index < len(track_uris):
+            # Break the updates into chunks of 50
+            slice_end_index = min(index + 50, len(track_uris))
+            tracks_slice = track_uris[index:slice_end_index]
+            index = slice_end_index
 
-            self.__spotify.current_user_saved_tracks_add([track['uri'] for track in chunk])
+            self.__spotify.current_user_saved_tracks_add(tracks_slice)
 
     # Given a list of tracks, find there spotify equivalents
     def find_tracks(self, tracks):
         for track in tracks:
             self.__find_track(track)
+
+    def tracks_to_json(self):
+        return dumps(self.merged_tracks, cls=TrackEncoder)
+
+    def dump_tracks_to_json(self, filename):
+        with open(filename, 'w') as out:
+            out.write(self.tracks_to_json())
+
+    def get_merged_tracks(self):
+        return self.tracks_to_json()
 
     # Use spotify to find a track on the spotify service, goal is to retrieve a track uri
     def __find_track(self, track):
@@ -67,7 +89,12 @@ class SpotifyWrapper:
             print(f"Best Matched Result for {track['title']} - {track['artist']} from Spotify is {scored_results[max(scored_results)]}")
             top_score = max(scored_results)
             if top_score > 75:
-                self.mapped_tracks.append(scored_results[top_score])
+                best_matched_track = scored_results[top_score]
+                self.mapped_tracks.append(best_matched_track)
+                self.merged_tracks.append(MergedTrack(
+                    gpm=track,
+                    spotify=best_matched_track
+                ))
             else:
                 print("No matches found with a high enough score")
                 self.unmapped_tracks.append(track)
@@ -75,6 +102,10 @@ class SpotifyWrapper:
         else:
             print(f"Could not find a match for {track['title']} - {track['artist']}")
             self.unmapped_tracks.append(track)
+            self.merged_tracks.append(MergedTrack(
+                gpm=track,
+                spotify=None
+            ))
 
     # Load spotify config info
     def __load_secrets(self):

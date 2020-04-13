@@ -7,5 +7,15 @@
     "user": "yasir96"
   },"gpm": {
     "oauth_path": "./.oauth.cred"
+  }, "kafka": {
+    "read-topics": ["gpm-auth", "spotify-migration"],
+    "write-topics": {
+      "gpm_library": "libraries"
+    },
+    "offset-reset": "earliest",
+    "group": "gpm",
+    "servers": [
+      "localhost:9092"
+    ]
   }
 }
