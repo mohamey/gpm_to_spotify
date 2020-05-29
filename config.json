@@ -8,7 +8,7 @@
   },"gpm": {
     "oauth_path": "./.oauth.cred"
   }, "kafka": {
-    "read-topics": ["gpm-auth", "spotify-migration"],
+    "read-topic": "gpm-auth",
     "write-topics": {
       "gpm_library": "libraries"
     },

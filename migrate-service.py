@@ -23,7 +23,7 @@ with open('config.json') as config_file:
 
 def get_kafka_consumer(config):
     logger.info(f"Creating a Kafka Consumer with the following config: {str(config)}")
-    return KafkaConsumer(config['read-topics'],
+    return KafkaConsumer(config['read-topic'],
                          bootstrap_servers=config['servers'],
                          auto_offset_reset=config['offset-reset'],
                          enable_auto_commit=True,
