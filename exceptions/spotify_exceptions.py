@@ -1,10 +1,16 @@
-# Error should be thrown when an invalid auth token is received
 class InvalidAuthTokenReceived(Exception):
-   def __init__(self, message):
-       super().__init__(message)
+    """
+    This exception should be thrown when an invalid auth token has been received from the user
+    """
 
-# Exception should be thrown when trying to perform an action with a track on Spotify but the track object isn't
-# properly formed
+    def __init__(self, message):
+        super().__init__(message)
+
+
 class InvalidTrackUsed(Exception):
+    """
+    This exception should be thrown when trying to perform an action with a Spotify track but the track object is not
+    properly formed
+    """
     def __init__(self, message):
         super().__init__(message)

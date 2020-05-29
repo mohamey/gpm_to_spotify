@@ -1,15 +1,26 @@
-"""To be used when performing an action that client requires authentication to do"""
 class NotAuthenticatedException(Exception):
+    """
+    This exception is thrown when an action on the Skyjam API is attempted but the wrapper has not yet been
+    authenticated
+    """
+
     def __init__(self, message):
         super().__init__(message)
 
 
-"""To be used when theres been a failure trying to get oauth token"""
 class UnableToGetOauthCredentials(Exception):
+    """
+    This exception is thrown when the wrapper is unable to get the oauth token to access the Skyjam API
+    """
+
     def __init__(self, message):
         super().__init__(message)
 
-"""To be used when unable to login to the service"""
+
 class UnableToLoginToService(Exception):
+    """
+    This exception is thrown when the wrapper is unable to login to the Skyjam API
+    """
+
     def __init__(self, message):
         super().__init__(message)

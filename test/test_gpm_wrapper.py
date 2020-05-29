@@ -1,15 +1,16 @@
 import unittest
 from exceptions import gpm_exceptions
 from gmusicapi import Mobileclient
-from meta.structures.track import Track
+from meta.structures.track import GpmTrack
 from unittest.mock import MagicMock
 from unittest.mock import patch
 from wrappers import gpm_wrapper
 
+
 class GpmWrapperTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.wrapper = gpm_wrapper.Wrapper()
+        self.wrapper = gpm_wrapper.GpmWrapper()
         self.test_fp = "Test File Path"
         self.device_id = Mobileclient.FROM_MAC_ADDRESS
 
@@ -75,7 +76,7 @@ class GpmWrapperTestCase(unittest.TestCase):
         self.assertEqual(len(tracks_list), 2)
 
         for track in tracks_list:
-            self.assertEqual(Track, type(track))
+            self.assertEqual(GpmTrack, type(track))
 
             for key in ['title', 'artist', 'album', 'year']:
                 self.assertTrue(key in track)
