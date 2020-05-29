@@ -4,7 +4,7 @@ class NotAuthenticatedException(Exception):
     authenticated
     """
 
-    def __init__(self, message):
+    def __init__(self, message: str):
         super().__init__(message)
 
 
@@ -13,7 +13,7 @@ class UnableToGetOauthCredentials(Exception):
     This exception is thrown when the wrapper is unable to get the oauth token to access the Skyjam API
     """
 
-    def __init__(self, message):
+    def __init__(self, message: str):
         super().__init__(message)
 
 
@@ -22,5 +22,5 @@ class UnableToLoginToService(Exception):
     This exception is thrown when the wrapper is unable to login to the Skyjam API
     """
 
-    def __init__(self, message):
+    def __init__(self, message: str):
         super().__init__(message)
