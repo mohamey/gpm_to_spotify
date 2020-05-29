@@ -3,7 +3,7 @@ from json import load
 from wrappers import gpm_wrapper, spotify_wrapper
 
 if __name__ == '__main__':
-    with open('.config.json') as config_file:
+    with open('config.json') as config_file:
         config = load(config_file)
 
     if not config:
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     spotify_wrapper = spotify_wrapper.SpotifyWrapper(config['spotify'])
     spotify_wrapper.handle_auth()
     spotify_wrapper.find_tracks(track_list)
-    spotify_wrapper.add_saved_tracks()
+    # spotify_wrapper.add_saved_tracks()
 
     print(f"Matched {len(spotify_wrapper.mapped_tracks)} of {len(track_list)} from Google Play Music.")
 
