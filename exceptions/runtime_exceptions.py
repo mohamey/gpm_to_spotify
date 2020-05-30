@@ -1,4 +1,10 @@
-# This exception should be thrown when the config is invalid
 class InvalidConfigException(Exception):
-    def __init__(self, message):
+    """
+    This exception is thrown when there's an error parsing the config for the service
+
+    Args:
+        message (str): Description of the exception
+    """
+
+    def __init__(self, message: str):
         super().__init__(message)

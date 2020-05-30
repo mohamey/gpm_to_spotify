@@ -9,7 +9,7 @@ if __name__ == '__main__':
     if not config:
         raise InvalidConfigException("Config is empty")
 
-    gpm_wrapper = gpm_wrapper.Wrapper(config['gpm'])
+    gpm_wrapper = gpm_wrapper.GpmWrapper(config['gpm'])
 
     # Perform oauth (if necessary), then login to the service
     gpm_wrapper.handle_auth_flow()
