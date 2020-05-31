@@ -44,6 +44,9 @@ class ApiWrapper:
         Returns:
             GpmTrack: A GpmTrack representing the track returned by Skyjam
 
+        Todo:
+            * Get Genre from the dict return by Skyjam and map it to the GpmTrack
+
         """
 
         return GpmTrack(
