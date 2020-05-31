@@ -1,3 +1,4 @@
+from exceptions.gpm.api_exceptions import MalformedTrackException
 from json import JSONEncoder
 
 
@@ -11,9 +12,14 @@ class GpmTrack:
         album (str): The name of the album the track belongs to
         year (int): The year the track was released
         genre (str): The genre of the track
+
+    Raises:
+        MalformedTrackException: When trying to create a GpmTrack without at least one of the mandatory attributes.
     """
 
     def __init__(self, title: str, artist: str, album: str = None, year: int = None, genre: str = None):
+        if title is None or artist is None:
+            raise MalformedTrackException("Title and Artist cannot be None.")
         self.title: str = title
         self.artist: str = artist
         self.album: str = album
