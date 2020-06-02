@@ -1,4 +1,4 @@
-class MalformedTrackException(Exception):
+class GpmMalformedTrackException(Exception):
     """
     This exception is thrown when we attempt to create a GpmTrack using a malformed track object
 
