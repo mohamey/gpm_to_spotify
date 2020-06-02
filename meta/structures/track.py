@@ -26,6 +26,22 @@ class GpmTrack:
         self.year: int = year
         self.genre: str = genre
 
+    def get_title(self) -> str:
+        return self.title
+
+    def get_artist(self) -> str:
+        return self.artist
+
+    def get_album(self) -> str:
+        return self.album
+
+    def get_year(self) -> int:
+        return self.year
+
+    def get_genre(self) -> str:
+        return self.genre
+
+
 
 class SpotifyTrack:
     """

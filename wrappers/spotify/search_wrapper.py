@@ -1,6 +1,7 @@
 from exceptions.spotify.search_exceptions import NoMatchException
 from meta.structures.track import GpmTrack, SpotifyTrack
 from spotipy import Spotify
+from typing import Tuple
 
 class SearchWrapper:
     """
@@ -26,6 +27,7 @@ class SearchWrapper:
         """
 
         # Convert GPM Track To Search String
+        search_string: str = SearchWrapper.__get_search_query(gpm_track=GpmTrack)
 
         # Search Spotify API using all available criteria
 
@@ -42,3 +44,40 @@ class SearchWrapper:
         # Return the track
 
         return None
+
+    @staticmethod
+    def __get_search_query(gpm_track: GpmTrack, attributes_filter: Tuple[str] = ()) -> str:
+        """
+        Given a GPM Track, encode a spotify search string
+        Args:
+            gpm_track (GpmTrack): -> GpmTrack we're searching Spotify for
+            attributes_filter (Tuple[str]): A Tuple of GpmTrack Attributes to ignore in the search
+
+        Returns:
+            str: A Spotify Search String
+
+        Todo:
+            * Raise an exception when the resulting search string is empty
+
+        """
+
+        query_parts = []
+        if 'title' not in attributes_filter:
+            title_value: str = gpm_track.get_title()
+
+            if title_value is not None:
+                query_parts.append(f"track:\"{title_value}\"")
+
+        if 'artist' not in attributes_filter:
+            artist_value: str = gpm_track.get_artist()
+
+            if artist_value is not None:
+                query_parts.append(f"artist:\"{artist_value}\"")
+
+        if 'album' not in attributes_filter:
+            album_value: str = gpm_track.get_album()
+
+            if album_value is not None:
+                query_parts.append(f"album:\"{album_value}\"")
+
+        return '+'.join(query_parts)
