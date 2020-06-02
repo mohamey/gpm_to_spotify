@@ -1,4 +1,4 @@
-from exceptions.gpm.api_exceptions import MalformedTrackException, UnauthenticatedClientException
+from exceptions.gpm.api_exceptions import GpmMalformedTrackException, UnauthenticatedClientException
 from gmusicapi import Mobileclient
 from meta.structures.track import GpmTrack
 from typing import List
@@ -60,10 +60,10 @@ class ApiWrapperTest(unittest.TestCase):
             }
         ]
 
-        with self.assertRaises(MalformedTrackException) as context:
+        with self.assertRaises(GpmMalformedTrackException) as context:
             ApiWrapper.get_library(mobile_client=mock_mobile_client)
 
         mock_mobile_client.is_authenticated.assert_called_once()
         mock_mobile_client.get_all_songs.assert_called_once()
-        self.assertEqual(MalformedTrackException, type(context.exception), "Tried to parse a malformed track into a \
+        self.assertEqual(GpmMalformedTrackException, type(context.exception), "Tried to parse a malformed track into a \
                                                                            GpmTrack")
