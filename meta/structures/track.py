@@ -80,7 +80,7 @@ class SpotifyTrack:
     def set_score(self, score: int):
         self.score = score
 
-    def get_score(self):
+    def get_score(self) -> int:
         return self.score
 
     def get_title(self) -> str:
