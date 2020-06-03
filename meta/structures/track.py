@@ -15,7 +15,7 @@ class GpmTrack:
         genre (str): The genre of the track
 
     Raises:
-        MalformedTrackException: When trying to create a GpmTrack without at least one of the mandatory attributes.
+        GpmMalformedTrackException: When trying to create a GpmTrack without at least one of the mandatory attributes.
     """
 
     def __init__(self, title: str, artist: str, album: str = None, year: str = None, genre: str = None):
@@ -57,6 +57,10 @@ class SpotifyTrack:
         score (int): Score of the match for this Spotify Track with the original GPM Track
         year (str): The year the track was released
         genre (str): The genre of the track
+
+    Raises:
+        SpotifyMalformedTrackException: When trying to create a Spotify Track without at least one of the mandatory
+            attributes.
     """
 
     def __init__(self, title: str, artist: str, uri: str, album: str = None, album_art_url: str = None,
