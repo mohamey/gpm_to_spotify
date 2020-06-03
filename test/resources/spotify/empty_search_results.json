@@ -1,0 +1,11 @@
+{
+  "tracks": {
+    "href": "https://api.spotify.com/v1/search?query=track%3A%22Any+Colour+You+Like%22%2Bartist%3A%22Pink+Floyd%22%2Balbum%3A%22The+Dark+Side+of+the+Moon%22&type=track&offset=0&limit=20",
+    "items": [],
+    "limit": 20,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total": 0
+  }
+}

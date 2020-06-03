@@ -1,0 +1,161 @@
+{
+  "tracks": {
+    "href": "https://api.spotify.com/v1/search?query=track%3A%22Any+Colour+You+Like%22%2Bartist%3A%22Pink+Floyd%22%2Balbum%3A%22The+Dark+Side+of+the+Moon%22&type=track&offset=0&limit=20",
+    "items": [
+      {
+        "album": {
+          "album_type": "album",
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0k17h0D3J5VfsdmQ1iZtE9"
+              },
+              "href": "https://api.spotify.com/v1/artists/0k17h0D3J5VfsdmQ1iZtE9",
+              "id": "0k17h0D3J5VfsdmQ1iZtE9",
+              "name": "Pink Floyd",
+              "type": "artist",
+              "uri": "spotify:artist:0k17h0D3J5VfsdmQ1iZtE9"
+            }
+          ],
+          "available_markets": [
+            "AD",
+            "AT",
+            "BE",
+            "BG",
+            "CH",
+            "CY",
+            "CZ",
+            "DE",
+            "DK",
+            "DZ",
+            "EE",
+            "ES",
+            "FI",
+            "FR",
+            "GB",
+            "GR",
+            "HU",
+            "IE",
+            "IS",
+            "IT",
+            "LI",
+            "LT",
+            "LU",
+            "LV",
+            "MA",
+            "MC",
+            "MT",
+            "NL",
+            "NO",
+            "PL",
+            "PT",
+            "RO",
+            "SE",
+            "SK",
+            "TR"
+          ],
+          "external_urls": {
+            "spotify": "https://open.spotify.com/album/2WT1pbYjLJciAR26yMebkH"
+          },
+          "href": "https://api.spotify.com/v1/albums/2WT1pbYjLJciAR26yMebkH",
+          "id": "2WT1pbYjLJciAR26yMebkH",
+          "images": [
+            {
+              "height": 640,
+              "url": "https://i.scdn.co/image/ab67616d0000b27331c57b302f0e3aca46ab7561",
+              "width": 640
+            },
+            {
+              "height": 300,
+              "url": "https://i.scdn.co/image/ab67616d00001e0231c57b302f0e3aca46ab7561",
+              "width": 300
+            },
+            {
+              "height": 64,
+              "url": "https://i.scdn.co/image/ab67616d0000485131c57b302f0e3aca46ab7561",
+              "width": 64
+            }
+          ],
+          "name": "The Dark Side Of The Moon [Remastered] (Remastered Version)",
+          "release_date": "1973-03-01",
+          "release_date_precision": "day",
+          "total_tracks": 10,
+          "type": "album",
+          "uri": "spotify:album:2WT1pbYjLJciAR26yMebkH"
+        },
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/0k17h0D3J5VfsdmQ1iZtE9"
+            },
+            "href": "https://api.spotify.com/v1/artists/0k17h0D3J5VfsdmQ1iZtE9",
+            "id": "0k17h0D3J5VfsdmQ1iZtE9",
+            "name": "Pink Floyd",
+            "type": "artist",
+            "uri": "spotify:artist:0k17h0D3J5VfsdmQ1iZtE9"
+          }
+        ],
+        "available_markets": [
+          "AD",
+          "AT",
+          "BE",
+          "BG",
+          "CH",
+          "CY",
+          "CZ",
+          "DE",
+          "DK",
+          "DZ",
+          "EE",
+          "ES",
+          "FI",
+          "FR",
+          "GB",
+          "GR",
+          "HU",
+          "IE",
+          "IS",
+          "IT",
+          "LI",
+          "LT",
+          "LU",
+          "LV",
+          "MA",
+          "MC",
+          "MT",
+          "NL",
+          "NO",
+          "PL",
+          "PT",
+          "RO",
+          "SE",
+          "SK",
+          "TR"
+        ],
+        "disc_number": 1,
+        "duration_ms": 206429,
+        "explicit": false,
+        "external_ids": {
+          "isrc": "GBN9Y1100083"
+        },
+        "external_urls": {
+          "spotify": "https://open.spotify.com/track/1wGoqD0vrf7njGvxm8CEf5"
+        },
+        "href": "https://api.spotify.com/v1/tracks/1wGoqD0vrf7njGvxm8CEf5",
+        "id": "1wGoqD0vrf7njGvxm8CEf5",
+        "is_local": false,
+        "name": "Any Colour You Like - 2011 Remastered Version",
+        "popularity": 55,
+        "preview_url": "https://p.scdn.co/mp3-preview/eb94ea77efdc2f5dd3a3ddf1b9561ca04c0719ba?cid=774b29d4f13844c495f206cafdad9c86",
+        "track_number": 8,
+        "type": "track",
+        "uri": "spotify:track:1wGoqD0vrf7njGvxm8CEf5"
+      }
+    ],
+    "limit": 20,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total": 1
+  }
+}
