@@ -37,7 +37,7 @@ class GpmTrack:
     def get_album(self) -> str:
         return self.album
 
-    def get_year(self) -> int:
+    def get_year(self) -> str:
         return self.year
 
     def get_genre(self) -> str:
