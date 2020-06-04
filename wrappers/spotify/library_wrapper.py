@@ -58,3 +58,4 @@ class LibraryWrapper:
             yield uris[current_index:end_index]
 
             current_index = end_index
+            print(f"Finished processing {current_index} of {max_index} tracks")
