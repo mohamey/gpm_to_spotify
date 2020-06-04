@@ -16,7 +16,6 @@ import spotipy.util as util
 class CLI:
 
     google_auth_link: str = "https://accounts.google.com/o/oauth2/v2/auth?client_id=228293309116.apps.googleusercontent.com&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fskyjam&access_type=offline&response_type=code"
-    spotify_auth_link: str = 'https://accounts.spotify.com/en/authorize?scope=user-library-read%252Cuser-library-modify&response_type=code&redirect_uri=http:%2F%2Flocalhost:4200%2Fmigrate&show_dialog=true&client_id=b23ad82376a24676a4ed6f3b451c82d8'
 
     @staticmethod
     def run_cli():
@@ -36,7 +35,7 @@ class CLI:
             spotify_config: dict = load(config_file)['spotify']['client']
 
         # Get GPM Auth Token and create mobile client
-        auth_code: str = input(f"Please follow this link and paste the result below:\n{google_auth_link}\n\n> ")
+        auth_code: str = input(f"Please follow this link and paste the result below:\n{CLI.google_auth_link}\n\n> ")
 
         try:
             mobile_client: Mobileclient = AuthWrapper.authenticate_mobile_client(mobile_client=Mobileclient(),
