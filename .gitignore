@@ -6,4 +6,5 @@ runtime/*
 *__pycache__*
 settings.json
 .config.json
+cli-config.json
 .oauth.cred
