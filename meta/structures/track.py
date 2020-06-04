@@ -1,6 +1,7 @@
 from exceptions.gpm.api_exceptions import GpmMalformedTrackException
 from exceptions.spotify.search_exceptions import SpotifyMalformedTrackException
 from json import JSONEncoder
+from re import sub
 
 
 class GpmTrack:
@@ -22,8 +23,8 @@ class GpmTrack:
         if title is None or artist is None:
             raise GpmMalformedTrackException("Title and Artist cannot be None.")
 
-        self.title: str = title
-        self.artist: str = artist
+        self.title: str = GpmTrack.__normalise(title)
+        self.artist: str = GpmTrack.__normalise(artist)
         self.album: str = album
         self.year: str = year
         self.genre: str = genre
@@ -42,6 +43,18 @@ class GpmTrack:
 
     def get_genre(self) -> str:
         return self.genre
+
+    @staticmethod
+    def __normalise(input: str) -> str:
+        """
+        Strip brackets and it's contents, then strip non-alphanumeric characters
+        Args:
+            input:
+
+        Returns:
+
+        """
+        return sub(" ?[\(\[][^)]+[\)\]]", "", str(input)).replace('\'', '').replace(',', ' ')
 
 
 class SpotifyTrack:
@@ -97,28 +110,3 @@ class SpotifyTrack:
 
     def get_uri(self) -> str:
         return self.uri
-
-
-class MatchedTrack:
-    """
-    A class used to define the match up of a spotify track and a google play music track. It's essentially just a dict
-    but we'll define a class to keep things Sane
-
-    Attributes:
-        gpm_track (GpmTrack): Mandatory. The gpmTrack object of the matching pair
-        spotify_track (SpotifyTrack): Mandatory. The spotifyTrack object of the matching pair
-    """
-    def __init__(self, gpm_track: GpmTrack, spotify_track: SpotifyTrack):
-        self.gpm_track: GpmTrack = gpm_track
-        self.spotify_track: SpotifyTrack = spotify_track
-
-
-class TrackEncoder(JSONEncoder):
-    """
-    Encodes Tracks as JSON.
-
-    Todo:
-        * Remove this.
-    """
-    def default(self, o):
-        return o.__dict__

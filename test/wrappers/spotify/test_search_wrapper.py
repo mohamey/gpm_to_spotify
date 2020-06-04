@@ -25,7 +25,7 @@ class SearchWrapperTest(unittest.TestCase):
                                                             year='1973')
 
         mock_spotify_client: Spotify = MagicMock(Spotify)
-        with open('../../resources/spotify/search_results.json', 'r') as search_results_file:
+        with open('test/resources/spotify/search_results.json', 'r') as search_results_file:
             mock_spotify_client.search.return_value = load(search_results_file)
 
         # Get the spotify track from the search wrapper
@@ -43,7 +43,7 @@ class SearchWrapperTest(unittest.TestCase):
         gpm_track: GpmTrack = GpmTrack(title='Test Title', artist='Test Artist')
 
         mock_spotify_client: Spotify = MagicMock(Spotify)
-        with open('../../resources/spotify/empty_search_results.json', 'r') as search_results_file:
+        with open('test/resources/spotify/empty_search_results.json', 'r') as search_results_file:
             mock_spotify_client.search.return_value = load(search_results_file)
 
         with self.assertRaises(NoMatchException) as context:

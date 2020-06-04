@@ -26,6 +26,9 @@ class SearchWrapper:
         Raises:
             NoMatchException: When no match is found for the track, raise an exception
 
+        Todo:
+            Have the search prefer explicit tracks
+
         """
 
         # Convert GPM Track To Search String
@@ -36,17 +39,15 @@ class SearchWrapper:
 
         # If we didn't get any results, relax the critetia and search again
         if search_results['total'] == 0:
-            search_string: str = SearchWrapper.__get_search_query(gpm_track=gpm_track, attributes_filter=('album',))
+            search_string: str = SearchWrapper.__get_search_query(gpm_track=gpm_track, attributes_filter=('album','artist'))
             search_results: dict = spotify_client.search(q=search_string, type='track', limit=50)['tracks']
 
             if search_results['total'] == 0:
                 # Give up, we still dont have any matches
-                raise NoMatchException(f"No match for {gpm_track.get_title()} - {gpm_track.get_artist()} - \
-                                            {gpm_track.get_album()}")
+                raise NoMatchException(f"No match for {gpm_track.get_title()} - {gpm_track.get_artist()} - {gpm_track.get_album()} - {search_string}")
 
-        else:
-            # We have results, parse the items
-            search_results = search_results['items']
+        # We have results, parse the items
+        search_results = search_results['items']
 
         # Set the best result to a placeholder with an impossible score
         best_result: SpotifyTrack = SpotifyTrack(title='Placeholder', artist='Placeholder', uri='test', score=-1)
@@ -118,7 +119,7 @@ class SearchWrapper:
             title=result['name'],
             artist=result['artists'][0]['name'],
             album=result['album']['name'],
-            album_art_url=result['album']['images'][2]['url'],
+            album_art_url=result['album']['images'],
             uri=result['uri'],
             year=result['album']['release_date'][0:4]
         )
