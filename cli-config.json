@@ -1,0 +1,10 @@
+{
+  "spotify": {
+    "client": {
+      "id": "APP_ID_HERE",
+      "redirect_uri": "APP_REDIRECT_HERE",
+      "secret": "APP_SECRET_HERE",
+      "username": "USERNAME_HERE"
+    }
+  }
+}
