@@ -1,6 +1,7 @@
 from exceptions.gpm.api_exceptions import GpmMalformedTrackException
 from exceptions.spotify.search_exceptions import SpotifyMalformedTrackException
 from json import JSONEncoder
+from re import sub
 
 
 class GpmTrack:
@@ -22,8 +23,8 @@ class GpmTrack:
         if title is None or artist is None:
             raise GpmMalformedTrackException("Title and Artist cannot be None.")
 
-        self.title: str = title
-        self.artist: str = artist
+        self.title: str = GpmTrack.__normalise(title)
+        self.artist: str = GpmTrack.__normalise(artist)
         self.album: str = album
         self.year: str = year
         self.genre: str = genre
@@ -42,6 +43,18 @@ class GpmTrack:
 
     def get_genre(self) -> str:
         return self.genre
+
+    @staticmethod
+    def __normalise(input: str) -> str:
+        """
+        Strip brackets and it's contents, then strip non-alphanumeric characters
+        Args:
+            input:
+
+        Returns:
+
+        """
+        return sub(" ?[\(\[][^)]+[\)\]]", "", str(input)).replace('\'', '').replace(',', ' ')
 
 
 class SpotifyTrack:
