@@ -1,6 +1,7 @@
-spotipy
 bumpversion
-pymaybe
 fuzzywuzzy
-python-Levenshtein
+gmusicapi
 kafka-python
+pymaybe
+python-Levenshtein
+spotipy
