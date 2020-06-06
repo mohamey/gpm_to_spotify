@@ -1,4 +1,4 @@
-from exceptions.spotify.search_exceptions import NoMatchException, SpotifyMalformedTrackException
+from exceptions.spotify.search_exceptions import NoMatchException
 from fuzzywuzzy import fuzz
 from meta.structures.track import GpmTrack, SpotifyTrack
 from spotipy import Spotify
