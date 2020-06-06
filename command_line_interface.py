@@ -9,6 +9,7 @@ from wrappers.gpm.api_wrapper import ApiWrapper
 from wrappers.gpm.auth_wrapper import AuthWrapper
 from wrappers.spotify.library_wrapper import LibraryWrapper
 from wrappers.spotify.search_wrapper import SearchWrapper
+from sys import argv
 
 import spotipy.util as util
 
@@ -18,7 +19,7 @@ class CLI:
     google_auth_link: str = "https://accounts.google.com/o/oauth2/v2/auth?client_id=228293309116.apps.googleusercontent.com&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fskyjam&access_type=offline&response_type=code"
 
     @staticmethod
-    def run_cli():
+    def run_cli(username: str):
         """
         This CLI Interface should just use basic prompts to get required tokens and migrate tracks to Spotify
 
@@ -51,7 +52,7 @@ class CLI:
 
         # Get Spotify Matches using Search Wrapper
         auth_token: str = util.prompt_for_user_token(
-            username=spotify_config['username'],
+            username=username,
             scope='user-library-read,user-library-modify',
             client_id=spotify_config['id'],
             client_secret=spotify_config['secret'],
@@ -84,3 +85,10 @@ class CLI:
         else:
             print("Invalid response, try again")
 
+
+if __name__ == '__main__':
+    if not argv[1]:
+        print("You must provide a username to be used with the CLI in the form python command_line_interface.py <username>")
+
+    username: str = argv[1]
+    CLI.run_cli(username=username)
