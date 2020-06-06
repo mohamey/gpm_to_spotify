@@ -9,7 +9,7 @@ class AuthWrapper:
     """
 
     @staticmethod
-    def authenticate_mobile_client(mobile_client: Mobileclient, code: str = None,
+    def authenticate_mobile_client(mobile_client: Mobileclient, oauth_credentials: OAuth2Credentials = None,
                                    device_id: str = Mobileclient.FROM_MAC_ADDRESS) -> Mobileclient:
         """
         This static method is responsible for taking a mobile client and authenticating it with the gmusicapi
@@ -17,8 +17,8 @@ class AuthWrapper:
         Args:
             mobile_client (Mobileclient): This is an unauthenticated mobile client to be authenticated with the
                 Skyjam API through OAuth2
-            code (str): The Auth Code provided from the user prompt, to be sent to the Auth Server to retrieve Oauth
-                Credentials
+            oauth_credentials (OAuth2Credentials): Oauth 2 Credentials already retrieved by the client to be used by the
+                Mobile Client. This parameter is optional, and will be retrieved by the gmusicapi if it's not supplied
             device_id (str): Device ID To be used by the Mobile Client. Defaults to the servers MAC Address.
 
         Returns:
@@ -35,10 +35,8 @@ class AuthWrapper:
 
         try:
             # Authenticate mobile client, return it
-            if code is None:
+            if oauth_credentials is None:
                 oauth_credentials: OAuth2Credentials = mobile_client.perform_oauth(storage_filepath=None)
-            else:
-                oauth_credentials: OAuth2Credentials = mobile_client.perform_oauth(storage_filepath=None, code=code)
 
             mobile_client.oauth_login(oauth_credentials=oauth_credentials, device_id=device_id)
 

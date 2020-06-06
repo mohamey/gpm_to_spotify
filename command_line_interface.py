@@ -16,8 +16,6 @@ import spotipy.util as util
 
 class CLI:
 
-    google_auth_link: str = "https://accounts.google.com/o/oauth2/v2/auth?client_id=228293309116.apps.googleusercontent.com&redirect_uri=urn%3Aietf%3Awg%3Aoauth%3A2.0%3Aoob&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fskyjam&access_type=offline&response_type=code"
-
     @staticmethod
     def run_cli(username: str):
         """
