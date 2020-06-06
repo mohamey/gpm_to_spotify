@@ -35,12 +35,8 @@ class CLI:
         with open("cli-config.json") as config_file:
             spotify_config: dict = load(config_file)['spotify']['client']
 
-        # Get GPM Auth Token and create mobile client
-        auth_code: str = input(f"Please follow this link and paste the result below:\n{CLI.google_auth_link}\n\n> ")
-
         try:
-            mobile_client: Mobileclient = AuthWrapper.authenticate_mobile_client(mobile_client=Mobileclient(),
-                                                                                 code=auth_code)
+            mobile_client: Mobileclient = AuthWrapper.authenticate_mobile_client(mobile_client=Mobileclient())
         except AuthException as e:
             print(f"Error getting an Authenticated Client for GPM:\n {e}")
             return

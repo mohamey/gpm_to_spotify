@@ -9,7 +9,7 @@ class AuthWrapper:
     """
 
     @staticmethod
-    def authenticate_mobile_client(mobile_client: Mobileclient, code: str,
+    def authenticate_mobile_client(mobile_client: Mobileclient, code: str = None,
                                    device_id: str = Mobileclient.FROM_MAC_ADDRESS) -> Mobileclient:
         """
         This static method is responsible for taking a mobile client and authenticating it with the gmusicapi
@@ -28,11 +28,17 @@ class AuthWrapper:
             AuthException: Raised when there was an issue performing the oauth token exchange with the auth server, or an issue
                 authenticating the mobile client.
 
+        TODO:
+            * Add Oauth Token exchange for when a code is supplied by the client
+
         """
 
         try:
             # Authenticate mobile client, return it
-            oauth_credentials: OAuth2Credentials = mobile_client.perform_oauth(storage_filepath=None, code=code)
+            if code is None:
+                oauth_credentials: OAuth2Credentials = mobile_client.perform_oauth(storage_filepath=None)
+            else:
+                oauth_credentials: OAuth2Credentials = mobile_client.perform_oauth(storage_filepath=None, code=code)
 
             mobile_client.oauth_login(oauth_credentials=oauth_credentials, device_id=device_id)
 
