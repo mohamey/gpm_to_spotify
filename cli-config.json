@@ -1,10 +1,9 @@
 {
   "spotify": {
     "client": {
-      "id": "APP_ID_HERE",
-      "redirect_uri": "APP_REDIRECT_HERE",
-      "secret": "APP_SECRET_HERE",
-      "username": "USERNAME_HERE"
+      "id": "b23ad82376a24676a4ed6f3b451c82d8",
+      "redirect_uri": "http://localhost:4200/fakeCallback",
+      "secret": "5d854c0acba5458da9dcf8cff83f045b"
     }
   }
 }
