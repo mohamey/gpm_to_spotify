@@ -1,5 +1,5 @@
 from exceptions.spotify.search_exceptions import NoMatchException
-from fuzzywuzzy import fuzz
+from rapidfuzz import fuzz
 from meta.structures.track import GpmTrack, SpotifyTrack
 from spotipy import Spotify
 from typing import Tuple
