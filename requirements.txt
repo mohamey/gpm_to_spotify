@@ -1,8 +1,7 @@
 bumpversion
-fuzzywuzzy
 gmusicapi
 kafka-python
 oauth2client
 pymaybe
-python-Levenshtein
+rapidfuzz
 spotipy
